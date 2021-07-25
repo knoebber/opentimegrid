@@ -42,31 +42,23 @@ function makeMonthState(monthNumber) {
   };
 }
 
-export default function Calendar(props) {
+export default function MonthView(props) {
   const {
-    title,
+    month,
   } = props;
 
-  const [monthNumber, setMonthNumber] = useState(dayjs().month());
-  const [monthState, setMonthState] = useState(makeMonthState(monthNumber));
+  const [monthState, setMonthState] = useState(makeMonthState(month));
 
   useEffect(() => {
-    setMonthState(makeMonthState(monthNumber));
-  }, [monthNumber]);
+    setMonthState(makeMonthState(month));
+  }, [month]);
 
   const {
     days,
-    month,
   } = monthState;
 
   return (
     <>
-      <h1>{title}</h1>
-      <div className="month-controls">
-        <button type="button" onClick={() => setMonthNumber(monthNumber - 1)}>Prev</button>
-        <strong>{month.format('MMMM YYYY')}</strong>
-        <button type="button" onClick={() => setMonthNumber(monthNumber + 1)}>Next</button>
-      </div>
       <div className="dayname-grid">
         {dayNames.map((name) => <div key={name} className="dayname"><strong>{name}</strong></div>)}
       </div>
@@ -81,6 +73,6 @@ export default function Calendar(props) {
   );
 }
 
-Calendar.propTypes = {
-  title: PropTypes.string.isRequired,
+MonthView.propTypes = {
+  month: PropTypes.number.isRequired,
 };

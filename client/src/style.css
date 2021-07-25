@@ -9,8 +9,19 @@ html {
     box-sizing: inherit;
 }
 
+nav a {
+    margin-left: 1rem;
+}
+
 h1 {
     color: hotpink;
+}
+
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .dayname-grid {
@@ -42,12 +53,5 @@ h1 {
 
 .day > p {
     text-align: center;
-}
-
-.month-controls {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
 }
 

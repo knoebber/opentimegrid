@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style.css';
-import Calendar from './components/Calendar';
+import Nav from './components/Nav';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Calendar
-      title="Calendar Thing"
-    />
+    <Nav />
   </React.StrictMode>,
   document.getElementById('root'),
 );
