@@ -1,3 +1,53 @@
-h1 {
-    color: purple;
+html {
+    box-sizing: border-box;
+    font-size: 18px;
 }
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+h1 {
+    color: hotpink;
+}
+
+.dayname-grid {
+    display: grid;
+    grid-template-rows: 40px;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.dayname {
+    margin: auto;
+}
+
+.month-grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(7, 1fr);
+    min-height: 70vh;
+
+    /* Border is finished in .day */
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.day {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    min-height: 80px;
+}
+
+.day > p {
+    text-align: center;
+}
+
+.month-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+

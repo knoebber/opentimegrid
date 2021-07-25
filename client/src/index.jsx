@@ -5,7 +5,9 @@ import Calendar from './components/Calendar';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Calendar />
+    <Calendar
+      title="Calendar Thing"
+    />
   </React.StrictMode>,
   document.getElementById('root'),
 );
