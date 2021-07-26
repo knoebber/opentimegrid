@@ -2,14 +2,13 @@ import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Link, Redirect, generatePath } from 'react-router-dom';
+import { calendarPath, makePathParams } from './paths';
 import {
-  dayPath,
-  monthPath,
-  weekPath,
-  yearPath,
-  makePathParams,
-} from './paths';
-import { viewTypes, yearMonthDay } from '../helper';
+  dateFormats,
+  titleCase,
+  viewTypeList,
+  viewTypes,
+} from '../helper';
 
 function reducer(state, {
   day,
@@ -24,48 +23,32 @@ function reducer(state, {
     };
   }
 
-  const dj = yearMonthDay(year, month, day);
+  const dj = dayjs().year(year).month(month - 1).date(day);
+  let previous;
+  let next;
 
-  switch (viewType) {
-    case viewTypes.YEAR: {
-      const next = dj.add(1, 'year');
-      const previous = dj.subtract(1, 'year');
-      return {
-        title: dj.format('YYYY'),
-        nextLink: generatePath(yearPath, makePathParams(next)),
-        previousLink: generatePath(yearPath, makePathParams(previous)),
-      };
-    }
-    case viewTypes.WEEK: {
-      const next = dj.add(7, 'day');
-      const previous = dj.subtract(7, 'day');
-      return {
-        title: dj.format('MMMM YYYY'),
-        nextLink: generatePath(weekPath, makePathParams(next)),
-        previousLink: generatePath(weekPath, makePathParams(previous)),
-      };
-    }
-    case viewTypes.MONTH: {
-      const next = dj.add(1, 'month');
-      const previous = dj.subtract(1, 'month');
-      return {
-        title: dj.format('MMMM YYYY'),
-        nextLink: generatePath(monthPath, makePathParams(next)),
-        previousLink: generatePath(monthPath, makePathParams(previous)),
-      };
-    }
-    case viewTypes.DAY: {
-      const next = dj.add(1, 'day');
-      const previous = dj.subtract(1, 'day');
-      return {
-        title: dj.format('MMMM D, YYYY'),
-        nextLink: generatePath(dayPath, makePathParams(next)),
-        previousLink: generatePath(dayPath, makePathParams(previous)),
-      };
-    }
-    default:
-      return state;
+  if (viewType === viewTypes.YEAR) {
+    next = dj.add(1, 'year');
+    previous = dj.subtract(1, 'year');
+  } else if (viewType === viewTypes.MONTH) {
+    next = dj.add(1, 'month');
+    previous = dj.subtract(1, 'month');
+  } else if (viewType === viewTypes.WEEK) {
+    next = dj.add(7, 'day');
+    previous = dj.subtract(7, 'day');
+  } else if (viewType === viewTypes.DAY) {
+    next = dj.add(1, 'day');
+    previous = dj.subtract(1, 'day');
+  } else {
+    return state;
   }
+
+  return {
+    nextLink: generatePath(calendarPath, makePathParams(viewType, next)),
+    previousLink: generatePath(calendarPath, makePathParams(viewType, previous)),
+    todayLink: generatePath(calendarPath, makePathParams(viewType, dayjs())),
+    title: dj.format(dateFormats[viewType]),
+  };
 }
 
 export default function CalendarControl(props) {
@@ -80,6 +63,7 @@ export default function CalendarControl(props) {
     title: '',
     nextLink: '',
     previousLink: '',
+    todayLink: '',
   });
 
   const {
@@ -87,6 +71,7 @@ export default function CalendarControl(props) {
     previousLink,
     redirect,
     title,
+    todayLink,
   } = state;
 
   useEffect(() => {
@@ -99,17 +84,39 @@ export default function CalendarControl(props) {
   }, [day, month, viewType, year]);
 
   if (redirect) {
-    // Default is month view at now.
     return (
-      <Redirect to={generatePath(monthPath, makePathParams(dayjs()))} />
+      <Redirect to={generatePath(calendarPath, makePathParams(viewTypes.MONTH, dayjs()))} />
     );
   }
 
   return (
     <div className="calendar-controls">
-      <Link to={previousLink}><button type="button">Previous</button></Link>
+      <div>
+        <Link to={todayLink}><button type="button">Today</button></Link>
+        <Link to={previousLink}><button type="button">Previous</button></Link>
+        <Link to={nextLink}><button type="button">Next</button></Link>
+      </div>
       <h2>{title}</h2>
-      <Link to={nextLink}><button type="button">Next</button></Link>
+      <div>
+        {viewTypeList.map((v) => (
+          <Link
+            key={v}
+            to={generatePath(calendarPath, {
+              day,
+              month,
+              year,
+              viewType: v.toLowerCase(),
+            })}
+          >
+            <button
+              type="button"
+              disabled={v === viewType}
+            >
+              {titleCase(v)}
+            </button>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
@@ -117,6 +124,6 @@ export default function CalendarControl(props) {
 CalendarControl.propTypes = {
   day: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
-  viewType: PropTypes.oneOf(Object.values(viewTypes)).isRequired,
+  viewType: PropTypes.oneOf(viewTypeList).isRequired,
   year: PropTypes.number.isRequired,
 };

@@ -1,12 +1,19 @@
-import dayjs from 'dayjs';
+export function titleCase(str) {
+  return str[0].toUpperCase() + str.toLowerCase().slice(1);
+}
 
 export const viewTypes = {
-  DAY: 'day',
-  MONTH: 'month',
-  WEEK: 'week',
-  YEAR: 'year',
+  DAY: 'DAY',
+  WEEK: 'WEEK',
+  MONTH: 'MONTH',
+  YEAR: 'YEAR',
 };
 
-export function yearMonthDay(year, month, day) {
-  return dayjs().year(year).month(month - 1).date(day);
-}
+export const dateFormats = {
+  DAY: 'MMMM D, YYYY',
+  WEEK: 'MMMM YYYY',
+  MONTH: 'MMMM YYYY',
+  YEAR: 'YYYY',
+};
+
+export const viewTypeList = Object.keys(viewTypes);

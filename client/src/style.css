@@ -19,9 +19,18 @@ h1 {
 
 .calendar-controls {
     display: flex;
-    justify-content: space-between;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    justify-content: space-between;
+}
+
+.calendar-controls h2 {
+    margin: 0;
+}
+
+.calendar-controls a {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .dayname-grid {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MonthView(props) {
+export default function WeekView(props) {
   const {
     day,
     month,
@@ -9,11 +9,11 @@ export default function MonthView(props) {
   } = props;
 
   return (
-    <strong>{`Month view: ${year} ${month} ${day}`}</strong>
+    <strong>{`Week view: ${year} ${month} ${day}`}</strong>
   );
 }
 
-MonthView.propTypes = {
+WeekView.propTypes = {
   day: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
