@@ -1,20 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default function DayView(props) {
-  const {
-    day,
-    month,
-    year,
-  } = props;
+// 1AM to 11PM;
+const hours = Array
+  .from({ length: 23 })
+  .map((_, i) => ({
+    hour: i,
+    display: `${(i % 12) + 1}${i < 11 ? 'AM' : 'PM'}`,
+  }));
 
+export default function DayView() {
   return (
-    <strong>{`Day view: ${year} ${month} ${day}`}</strong>
+    <div className="day-hour-grid">
+      {hours.map(({ hour, display }) => (
+        <div key={hour} className="day-hour-text">
+          <span>{display}</span>
+        </div>
+      ))}
+      <div className="day-hour-separator" />
+      {hours.map(({ hour }) => (
+        <div key={hour} className="day-hour-area" />
+      ))}
+    </div>
   );
 }
-
-DayView.propTypes = {
-  day: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
-};

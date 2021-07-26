@@ -59,12 +59,12 @@ export default function MonthView(props) {
 
   return (
     <>
-      <div className="dayname-grid">
-        {dayNames.map((name) => <div key={name} className="dayname"><strong>{name}</strong></div>)}
+      <div className="day-name-grid">
+        {dayNames.map((name) => <div key={name} className="day-name"><strong>{name}</strong></div>)}
       </div>
       <div className="month-grid">
         {days.map(({ display, unix }) => (
-          <div key={unix} className="day">
+          <div key={unix} className="month-day">
             <p><strong>{display}</strong></p>
           </div>
         ))}
