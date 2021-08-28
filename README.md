@@ -1,3 +1,3 @@
 # Open Time Grid
 
-The Stripe of calendar apps??
+Free and open source calendar web application. Very much WIP.
