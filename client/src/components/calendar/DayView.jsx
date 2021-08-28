@@ -1,12 +1,5 @@
 import React from 'react';
-
-// 1AM to 11PM;
-const hours = Array
-  .from({ length: 23 })
-  .map((_, i) => ({
-    hour: i,
-    display: `${(i % 12) + 1}${i < 11 ? 'AM' : 'PM'}`,
-  }));
+import { hours } from '../helper';
 
 export default function DayView() {
   return (

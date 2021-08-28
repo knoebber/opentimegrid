@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-
-const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-
-// dj is a dayjs object.
-function makeDayState(dj) {
-  const date = dj.date();
-  return {
-    display: date === 1 ? dj.format('MMM D') : date,
-    unix: dj.unix(),
-  };
-}
+import {
+  dayNamesShort,
+  makeDayState,
+} from '../helper';
 
 function makeMonthState(monthNumber) {
   const days = [];
 
-  const month = dayjs().month(monthNumber);
+  const month = dayjs().month(monthNumber - 1);
 
   const firstDateInMonth = month.date(1);
   const firstDayNameIndex = firstDateInMonth.day();
 
-  days[firstDayNameIndex] = makeDayState(firstDateInMonth);
+  // Set first day in month.
+  days[firstDayNameIndex] = makeDayState(firstDateInMonth, 'MMM D');
 
   // Backfill days from last month.
   for (let i = 0; i < firstDayNameIndex; i += 1) {
-    days[i] = makeDayState(firstDateInMonth.date((-1 * firstDayNameIndex) + i + 1));
+    const dj = firstDateInMonth.date((-1 * firstDayNameIndex) + i + 1);
+    days[i] = makeDayState(dj, 'D');
   }
 
   let dayCount = 1;
@@ -33,7 +28,8 @@ function makeMonthState(monthNumber) {
   // Month view always have 35 days - 5 rows, 7 columns.
   while (days.length < 35) {
     dayCount += 1;
-    days.push(makeDayState(month.date(dayCount)));
+    const dj = month.date(dayCount);
+    days.push(makeDayState(dj, dj.date() === 1 ? 'MMM D' : 'D'));
   }
 
   return {
@@ -47,7 +43,7 @@ export default function MonthView(props) {
     month,
   } = props;
 
-  const [monthState, setMonthState] = useState(makeMonthState(month));
+  const [monthState, setMonthState] = useState({ days: [], month: '' });
 
   useEffect(() => {
     setMonthState(makeMonthState(month));
@@ -60,11 +56,11 @@ export default function MonthView(props) {
   return (
     <>
       <div className="day-name-grid">
-        {dayNames.map((name) => <div key={name} className="day-name"><strong>{name}</strong></div>)}
+        {dayNamesShort.map((name) => <div key={name} className="day-name"><strong>{name}</strong></div>)}
       </div>
       <div className="month-grid">
-        {days.map(({ display, unix }) => (
-          <div key={unix} className="month-day">
+        {days.map(({ display, renderKey, isToday }) => (
+          <div key={renderKey} className={`month-day${isToday ? ' today' : ''}`}>
             <p><strong>{display}</strong></p>
           </div>
         ))}

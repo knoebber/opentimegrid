@@ -1,5 +1,6 @@
 :root {
     --border-color: grey;
+    --highlight-color: hotpink;
 }
 
 html {
@@ -19,7 +20,7 @@ nav a {
 }
 
 h1 {
-    color: hotpink;
+    color: var(--highlight-color);
 }
 
 .calendar-controls {
@@ -97,4 +98,13 @@ h1 {
     position: relative;
     top: 36px;
     margin-right: 10px;
+}
+
+.week-day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.today p {
+    color: var(--highlight-color);
 }
