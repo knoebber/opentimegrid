@@ -5,7 +5,7 @@
 
 html {
     box-sizing: border-box;
-    font-size: 18px;
+    font-size: 14px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
 }
 
@@ -64,17 +64,13 @@ h1 {
     border-top: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
     min-height: 80px;
-}
-
-.month-day > p {
     text-align: center;
 }
 
 .day-hour-grid {
     display: grid;
     grid-template-columns: 65px 8px 1fr;
-    grid-template-rows: repeat(25, 50px);
-    grid-auto-flow: row dense;
+    grid-template-rows: repeat(24, 50px);
 }
 
 .day-hour-text {
@@ -84,7 +80,6 @@ h1 {
 
 .day-hour-separator {
     border-right: 1px solid var(--border-color);
-    grid-row: 1 / 25;
     grid-column: 2;
 }
 
@@ -92,6 +87,11 @@ h1 {
     padding-left: 10px;
     margin-left: -10px;
     border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+}
+
+.day-hour-area.last-item {
+    border-bottom: unset;
 }
 
 .day-hour-text span {
@@ -102,9 +102,11 @@ h1 {
 
 .week-day-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 65px 8px repeat(7, 1fr);
+    grid-template-rows: 40px repeat(24, 50px);
+    text-align: center;
 }
 
-.today p {
+.today {
     color: var(--highlight-color);
 }

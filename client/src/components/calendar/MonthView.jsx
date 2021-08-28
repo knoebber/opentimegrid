@@ -60,8 +60,8 @@ export default function MonthView(props) {
       </div>
       <div className="month-grid">
         {days.map(({ display, renderKey, isToday }) => (
-          <div key={renderKey} className={`month-day${isToday ? ' today' : ''}`}>
-            <p><strong>{display}</strong></p>
+          <div key={renderKey} className="month-day">
+            <strong className={isToday ? 'today' : ''}>{display}</strong>
           </div>
         ))}
       </div>
