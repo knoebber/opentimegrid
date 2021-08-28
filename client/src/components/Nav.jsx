@@ -31,7 +31,7 @@ export default function Nav() {
         {links.map(({ text, path }) => (<Link key={path} to={path}>{text}</Link>))}
       </nav>
       <main>
-        <h1>Calendar Thing</h1>
+        <h1>Open Time Grid</h1>
         <Switch>
           {routes.map(({ component: Component, path }) => (
             <Route
