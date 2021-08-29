@@ -53,6 +53,7 @@ export default function Calendar() {
           key={path}
           path={path}
           render={({
+            history: { push },
             match: {
               params: {
                 year,
@@ -65,6 +66,7 @@ export default function Calendar() {
               <CalendarControl
                 day={parseInt(day, 10)}
                 month={parseInt(month, 10)}
+                pushHistory={push}
                 viewType={viewType}
                 year={parseInt(year, 10)}
               />

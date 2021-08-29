@@ -1,4 +1,8 @@
-import React, { useReducer, useEffect } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+} from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Link, Redirect, generatePath } from 'react-router-dom';
@@ -9,6 +13,14 @@ import {
   viewTypeList,
   viewTypes,
 } from '../helper';
+
+function nextAndPrevious(dj, viewType) {
+  if (viewType === viewTypes.YEAR) return { next: dj.add(1, 'year'), previous: dj.subtract(1, 'year') };
+  if (viewType === viewTypes.MONTH) return { next: dj.add(1, 'month'), previous: dj.subtract(1, 'month') };
+  if (viewType === viewTypes.WEEK) return { next: dj.add(7, 'day'), previous: dj.subtract(7, 'day') };
+  if (viewType === viewTypes.DAY) return { next: dj.add(1, 'day'), previous: dj.subtract(1, 'day') };
+  return { next: dj, previous: dj };
+}
 
 function reducer(state, {
   day,
@@ -24,24 +36,7 @@ function reducer(state, {
   }
 
   const dj = dayjs().year(year).month(month - 1).date(day);
-  let previous;
-  let next;
-
-  if (viewType === viewTypes.YEAR) {
-    next = dj.add(1, 'year');
-    previous = dj.subtract(1, 'year');
-  } else if (viewType === viewTypes.MONTH) {
-    next = dj.add(1, 'month');
-    previous = dj.subtract(1, 'month');
-  } else if (viewType === viewTypes.WEEK) {
-    next = dj.add(7, 'day');
-    previous = dj.subtract(7, 'day');
-  } else if (viewType === viewTypes.DAY) {
-    next = dj.add(1, 'day');
-    previous = dj.subtract(1, 'day');
-  } else {
-    return state;
-  }
+  const { next, previous } = nextAndPrevious(dj, viewType);
 
   return {
     nextLink: generatePath(calendarPath, makePathParams(viewType, next)),
@@ -51,18 +46,46 @@ function reducer(state, {
   };
 }
 
+// Gets url params for a hotkey.
+function getParamsForHotkey(key, dj, viewType) {
+  const { next, previous } = nextAndPrevious(dj, viewType);
+  switch (key.toLowerCase()) {
+    case 'd':
+      return makePathParams(viewTypes.DAY, dj);
+    case 'w':
+      return makePathParams(viewTypes.WEEK, dj);
+    case 'm':
+      return makePathParams(viewTypes.MONTH, dj);
+    case 'y':
+      return makePathParams(viewTypes.YEAR, dj);
+    case 't':
+      return makePathParams(viewType, dayjs());
+    case '<':
+    case 'arrowleft':
+    case 'arrowdown':
+      return makePathParams(viewType, previous);
+    case '>':
+    case 'arrowright':
+    case 'arrowup':
+      return makePathParams(viewType, next);
+    default:
+      return null;
+  }
+}
+
 export default function CalendarControl(props) {
   const {
     day,
     month,
+    pushHistory,
     viewType,
     year,
   } = props;
 
   const [state, dispatch] = useReducer(reducer, {
-    title: '',
     nextLink: '',
     previousLink: '',
+    title: '',
     todayLink: '',
   });
 
@@ -73,6 +96,22 @@ export default function CalendarControl(props) {
     title,
     todayLink,
   } = state;
+
+  const onKeydown = useCallback((e) => {
+    const { key, target: { localName: tagName } } = e;
+    if (tagName !== 'body') return;
+
+    const dj = dayjs().year(year).month(month - 1).date(day);
+    const params = getParamsForHotkey(key, dj, viewType);
+    if (params) {
+      pushHistory(generatePath(calendarPath, params));
+    }
+  }, [day, month, viewType, year, pushHistory]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeydown, true);
+    return () => window.removeEventListener('keydown', onKeydown, true);
+  }, [onKeydown]);
 
   useEffect(() => {
     dispatch({
@@ -104,8 +143,8 @@ export default function CalendarControl(props) {
             to={generatePath(calendarPath, {
               day,
               month,
-              year,
               viewType: v.toLowerCase(),
+              year,
             })}
           >
             <button
@@ -124,6 +163,7 @@ export default function CalendarControl(props) {
 CalendarControl.propTypes = {
   day: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
+  pushHistory: PropTypes.func.isRequired,
   viewType: PropTypes.oneOf(viewTypeList).isRequired,
   year: PropTypes.number.isRequired,
 };
