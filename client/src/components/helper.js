@@ -10,7 +10,7 @@ export function makeDayState(dj, format) {
     display: dj.format(format),
     isToday: dayjs().isSame(dj, 'day'),
     unix: dj.unix(),
-    renderKey: dj.date() * dj.month() * dj.year(),
+    renderKey: dj.format('YYYYMD'),
   };
 }
 
