@@ -18,6 +18,8 @@ export const viewTypes = {
   DAY: 'DAY',
   WEEK: 'WEEK',
   MONTH: 'MONTH',
+  QUARTER: 'QUARTER',
+  HALF: 'HALF',
   YEAR: 'YEAR',
 };
 
@@ -25,6 +27,8 @@ export const dateFormats = {
   DAY: 'dddd, MMMM D, YYYY',
   WEEK: 'MMMM YYYY',
   MONTH: 'MMMM YYYY',
+  QUARTER: 'MMMM YYYY',
+  HALF: 'YYYY',
   YEAR: 'YYYY',
 };
 

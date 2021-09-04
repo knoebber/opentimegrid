@@ -56,17 +56,22 @@ function getParamsForHotkey(key, dj, viewType) {
       return makePathParams(viewTypes.WEEK, dj);
     case 'm':
       return makePathParams(viewTypes.MONTH, dj);
+    case 'q':
+      return makePathParams(viewTypes.QUARTER, dj);
+    case 'h':
+      return makePathParams(viewTypes.HALF, dj);
     case 'y':
       return makePathParams(viewTypes.YEAR, dj);
     case 't':
+    case 'home':
       return makePathParams(viewType, dayjs());
     case '<':
     case 'arrowleft':
-    case 'arrowdown':
+    case 'k':
       return makePathParams(viewType, previous);
     case '>':
     case 'arrowright':
-    case 'arrowup':
+    case 'j':
       return makePathParams(viewType, next);
     default:
       return null;
@@ -77,6 +82,7 @@ export default function CalendarControl(props) {
   const {
     day,
     month,
+    pathname,
     pushHistory,
     viewType,
     year,
@@ -128,14 +134,24 @@ export default function CalendarControl(props) {
     );
   }
 
+  const isToday = todayLink === pathname;
+
   return (
     <div className="calendar-controls">
       <div>
-        <Link to={todayLink}><button type="button">Today</button></Link>
-        <Link to={previousLink}><button type="button">Previous</button></Link>
-        <Link to={nextLink}><button type="button">Next</button></Link>
+        <Link to={todayLink}>
+          <button type="button" disabled={isToday}>Today</button>
+        </Link>
+        <Link to={previousLink}>
+          <button type="button">Previous</button>
+        </Link>
+        <Link to={nextLink}>
+          <button type="button">Next</button>
+        </Link>
       </div>
-      <h2>{title}</h2>
+      <h2>
+        {title}
+      </h2>
       <div>
         {viewTypeList.map((v) => (
           <Link
@@ -163,6 +179,7 @@ export default function CalendarControl(props) {
 CalendarControl.propTypes = {
   day: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
+  pathname: PropTypes.string.isRequired,
   pushHistory: PropTypes.func.isRequired,
   viewType: PropTypes.oneOf(viewTypeList).isRequired,
   year: PropTypes.number.isRequired,
