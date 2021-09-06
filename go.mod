@@ -1,4 +1,4 @@
-module github.com/knoebber/opentimegrid/server
+module github.com/knoebber/opentimegrid
 
 go 1.17
 

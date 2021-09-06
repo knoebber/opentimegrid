@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/knoebber/opentimegrid/server/config"
+	"github.com/knoebber/opentimegrid/config"
 )
 
 func main() {
