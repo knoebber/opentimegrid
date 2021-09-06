@@ -1,5 +1,6 @@
 {
   "name": "open-time-grid-client",
+  "license": "MIT",
   "version": "0.1.0",
   "dependencies": {
     "dayjs": "^1.10.6",
