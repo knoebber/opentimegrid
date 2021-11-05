@@ -30,7 +30,7 @@ function makeDayColumnState(dj, col, empty) {
     date: dj.format('D'),
     dayname: dj.format('dd'),
     empty,
-    renderKey: `${col}-${dj.date()}`,
+    renderKey: dj.format('YYMD'),
     unix: dj.unix(),
   };
 }
