@@ -16,6 +16,7 @@ import {
 
 function nextAndPrevious(dj, viewType) {
   if (viewType === viewTypes.YEAR) return { next: dj.add(1, 'year'), previous: dj.subtract(1, 'year') };
+  if (viewType === viewTypes.HALF) return { next: dj.add(1, 'month'), previous: dj.subtract(1, 'month') };
   if (viewType === viewTypes.MONTH) return { next: dj.add(1, 'month'), previous: dj.subtract(1, 'month') };
   if (viewType === viewTypes.WEEK) return { next: dj.add(7, 'day'), previous: dj.subtract(7, 'day') };
   if (viewType === viewTypes.DAY) return { next: dj.add(1, 'day'), previous: dj.subtract(1, 'day') };

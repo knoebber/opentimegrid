@@ -1,6 +1,7 @@
 :root {
     --border-color: grey;
     --highlight-color: hotpink;
+    --empty-color: whitesmoke;
 }
 
 html {
@@ -12,6 +13,7 @@ html {
 body {
     overflow-y: scroll;
     overflow-x: auto;
+    margin: 7px;
 }
 
 *,
@@ -110,6 +112,30 @@ h1 {
     grid-template-columns: 65px 8px repeat(7, 1fr);
     grid-template-rows: 40px repeat(24, 50px);
     text-align: center;
+}
+
+.half-view-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 40px repeat(31, 30px);
+}
+
+.half-view-day-cell {
+    border-top: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+}
+
+.half-view-day-cell.empty {
+    background-color: var(--empty-color);
+}
+
+.half-view-day-cell.last-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.half-view-day-cell .date-cell {
+    margin-right: 4px;
 }
 
 .today {
