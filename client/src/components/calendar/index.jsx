@@ -7,27 +7,15 @@ import CalendarControl from './CalendarControl';
 import DayView from './DayView';
 import MonthView from './MonthView';
 import WeekView from './WeekView';
-import QuarterView from './QuarterView';
 import HalfView from './HalfView';
-import YearView from './YearView';
 import * as paths from './paths';
 import { viewTypes } from '../helper';
 
 const routes = [
   {
-    component: YearView,
-    path: paths.yearPath,
-    viewType: viewTypes.YEAR,
-  },
-  {
     component: HalfView,
     path: paths.halfPath,
     viewType: viewTypes.HALF,
-  },
-  {
-    component: QuarterView,
-    path: paths.quarterPath,
-    viewType: viewTypes.QUARTER,
   },
   {
     component: MonthView,

@@ -15,7 +15,6 @@ import {
 } from '../helper';
 
 function nextAndPrevious(dj, viewType) {
-  if (viewType === viewTypes.YEAR) return { next: dj.add(1, 'year'), previous: dj.subtract(1, 'year') };
   if (viewType === viewTypes.HALF) return { next: dj.add(1, 'month'), previous: dj.subtract(1, 'month') };
   if (viewType === viewTypes.MONTH) return { next: dj.add(1, 'month'), previous: dj.subtract(1, 'month') };
   if (viewType === viewTypes.WEEK) return { next: dj.add(7, 'day'), previous: dj.subtract(7, 'day') };
@@ -57,12 +56,8 @@ function getParamsForHotkey(key, dj, viewType) {
       return makePathParams(viewTypes.WEEK, dj);
     case 'm':
       return makePathParams(viewTypes.MONTH, dj);
-    case 'q':
-      return makePathParams(viewTypes.QUARTER, dj);
     case 'h':
       return makePathParams(viewTypes.HALF, dj);
-    case 'y':
-      return makePathParams(viewTypes.YEAR, dj);
     case 't':
     case 'home':
       return makePathParams(viewType, dayjs());
