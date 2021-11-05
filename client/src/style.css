@@ -46,17 +46,17 @@ h1 {
     margin-right: 1rem;
 }
 
-.day-name-grid {
+.month-view-dayname-grid {
     display: grid;
     grid-template-rows: 40px;
     grid-template-columns: repeat(7, 1fr);
 }
 
-.day-name {
+.month-view-dayname-grid div {
     margin: auto;
 }
 
-.month-grid {
+.month-view-grid {
     display: grid;
     height: 100%;
     grid-template-columns: repeat(7, 1fr);
@@ -67,20 +67,20 @@ h1 {
     border-right: 1px solid var(--border-color);
 }
 
-.month-day {
+.month-view-cell {
     border-top: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
     min-height: 80px;
     text-align: center;
 }
 
-.day-hour-grid {
+.day-view-grid {
     display: grid;
     grid-template-columns: 65px 8px 1fr;
     grid-template-rows: repeat(24, 50px);
 }
 
-.day-hour-text {
+.hours-in-day-text {
     grid-column: 1;
     text-align: right;
 }
@@ -90,24 +90,24 @@ h1 {
     grid-column: 2;
 }
 
-.day-hour-area {
+.hour-area {
     padding-left: 10px;
     margin-left: -10px;
     border-bottom: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
 }
 
-.day-hour-area.last-item {
+.hour-area.last-item {
     border-bottom: unset;
 }
 
-.day-hour-text span {
+.hours-in-day-text span {
     position: relative;
     top: 36px;
     margin-right: 10px;
 }
 
-.week-day-grid {
+.week-view-grid {
     display: grid;
     grid-template-columns: 65px 8px repeat(7, 1fr);
     grid-template-rows: 40px repeat(24, 50px);

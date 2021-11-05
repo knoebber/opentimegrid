@@ -12,7 +12,7 @@ export default function HoursInDay(props) {
   return hours.map(({ hour, display }, i) => (
     <div
       key={hour}
-      className={`day-hour-text ${!display ? 'last-item' : ''}`}
+      className="hours-in-day-text"
       style={{ gridRow: rowStart + i }}
     >
       { display && (

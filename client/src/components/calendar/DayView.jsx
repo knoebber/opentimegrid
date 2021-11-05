@@ -21,7 +21,7 @@ export default function DayView(props) {
   }, [day, month, year]);
 
   return (
-    <div className="day-hour-grid">
+    <div className="day-view-grid">
       <HoursInDay
         currentHour={dayState.currentHour}
         isToday={dayState.isToday}

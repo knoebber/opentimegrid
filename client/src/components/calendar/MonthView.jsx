@@ -55,12 +55,12 @@ export default function MonthView(props) {
 
   return (
     <>
-      <div className="day-name-grid">
-        {dayNamesShort.map((name) => <div key={name} className="day-name"><strong>{name}</strong></div>)}
+      <div className="month-view-dayname-grid">
+        {dayNamesShort.map((name) => <div key={name}><strong>{name}</strong></div>)}
       </div>
-      <div className="month-grid">
+      <div className="month-view-grid">
         {days.map(({ display, renderKey, isToday }) => (
-          <div key={renderKey} className="month-day">
+          <div key={renderKey} className="month-view-cell">
             <strong className={isToday ? 'today' : ''}>{display}</strong>
           </div>
         ))}

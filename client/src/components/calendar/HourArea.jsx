@@ -9,7 +9,7 @@ export default function HourArea(props) {
 
   return hours.map(({ hour, display }) => (
     <div
-      className={`day-hour-area${!display ? ' last-item' : ''}`}
+      className={`hour-area${!display ? ' last-item' : ''}`}
       key={hour}
       style={{ gridRow: hour + rowStart }}
     />

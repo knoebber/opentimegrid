@@ -12,19 +12,19 @@ export default function WeekView(props) {
     year,
   } = props;
 
-  const [weekState, setWeekState] = useState([]);
+  const [state, setState] = useState([]);
   useEffect(() => {
-    const result = [];
     const dj = dayjs().year(year).month(month - 1).date(day);
     const sunday = dj.subtract(dj.day(), 'day');
+    const result = [];
     for (let i = 0; i < 7; i += 1) {
       result[i] = makeDayState(sunday.add(i, 'day'), 'ddd MM/DD');
     }
-    setWeekState(result);
+    setState(result);
   }, [day, month, year]);
 
   return (
-    <div className="week-day-grid">
+    <div className="week-view-grid">
       <HoursInDay
         currentHour={0}
         isToday={false}
@@ -34,16 +34,15 @@ export default function WeekView(props) {
         className="day-hour-separator"
         style={{ gridRow: '2 / 26' }}
       />
-      {weekState.map(({ display, renderKey, isToday }, i) => (
+      {state.map(({ display, renderKey, isToday }, i) => (
         <div
-          className="week-day"
           key={renderKey}
           style={{ gridArea: `1 / ${i + 3}` }}
         >
           <strong className={isToday ? 'today' : ''}>{display}</strong>
         </div>
       ))}
-      {weekState.map(({ renderKey }) => (
+      {state.map(({ renderKey }) => (
         <HourArea
           key={renderKey}
           rowStart={2}
