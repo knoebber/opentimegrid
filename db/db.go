@@ -29,6 +29,11 @@ func Start(connString string) (err error) {
 	return nil
 }
 
+func NotFound(err error) bool {
+	// TODO
+	return false
+}
+
 // Close closes the database connection.
 func Close() {
 	Conn.Close()
