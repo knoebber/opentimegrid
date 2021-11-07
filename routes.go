@@ -9,23 +9,24 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/knoebber/opentimegrid/config"
 )
+
+const apiPath = "/api/v1"
 
 //go:embed client/build
 var content embed.FS
 
-func setupRouter() *chi.Mux {
+func setupRouter(c *config.ServerConfiguration) *chi.Mux {
 	router := chi.NewRouter()
 
-	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 
 	staticRoutes(router)
 
-	router.Route("/api/v1", func(api chi.Router) {
-		authRoutes(api)
-	})
+	router.Mount(apiPath+"/calendar", calendarResource{}.Routes())
+
 	return router
 }
 
@@ -58,13 +59,5 @@ func staticRoutes(router *chi.Mux) {
 		} else {
 			w.Write(html)
 		}
-	})
-}
-
-func authRoutes(router chi.Router) {
-	router.Route("/auth", func(auth chi.Router) {
-		auth.Get("/login", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("logged in"))
-		})
 	})
 }

@@ -6,20 +6,18 @@ import (
 	"os"
 )
 
-var (
-	// Server stores the web server configuration.
-	Server *ServerConfiguration
-	DBConn string
-)
-
-// Set sets global configuration variables.
-func Set() error {
-	Server = new(ServerConfiguration)
-	Server.setFlags()
-
-	DBConn = os.Getenv("OPENTIMEGRID_DB")
-
+func Server() *ServerConfiguration {
+	server := new(ServerConfiguration)
+	server.setFlags()
 	flag.Parse()
 
-	return nil
+	return server
+}
+
+func Redis() string {
+	return os.Getenv("OPENTIMEGRID_REDIS")
+}
+
+func DB() string {
+	return os.Getenv("OPENTIMEGRID_DB")
 }
